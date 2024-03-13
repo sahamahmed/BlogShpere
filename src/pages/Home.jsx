@@ -11,6 +11,7 @@ import PostCard from "../components/postCard/PostCard"
 import {Input } from "../components";
 import { FcSearch } from "react-icons/fc";
 
+
 function Home() {
   const authStatus = useSelector((state) => state.auth.status);
   const userDetails = useSelector((state) => state.auth.userData);
@@ -23,7 +24,10 @@ function Home() {
   const { register, handleSubmit } = useForm();
   const [posts, setposts] = useState([]);
   const [searched, setSearched] = useState(false);
+//////////////////////////////////////////////////////////////////////////////////////////
 
+ 
+///////////////////////////////////////////////////////////////////////////////////
   const fetchSearch = (data) => {
     const searchTerm = data.searchpost.toLowerCase();
     const filteredPosts = postData.filter((post) =>
@@ -145,7 +149,11 @@ function Home() {
   }
 
   return (
+
     <>
+{/*       */}
+  
+ {/* /////////////////////////// */}
       {showNotification && <Notification message= {`Welcome back, ${userName}`} />}
       <div className="w-full py-8">
         <Loadingbar />
@@ -178,3 +186,15 @@ function Home() {
   );
 }
 export default Home;
+
+
+
+
+
+
+
+
+
+ 
+
+

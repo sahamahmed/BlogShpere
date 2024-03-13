@@ -2,28 +2,31 @@ import { Link } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../index";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useState , useEffect } from "react";
+
+// import { useState , useEffect } from "react";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);
   
-  const [isNavOpen , setIsNavOpen ] = useState(false)
-  const toggleNav = () => {
-    setIsNavOpen((prevState) => !prevState);
-};
+ const [open, setOpen] = React.useState(false);
 
- useEffect(() => {
-   const handleClickOutside = (event) => {
-     if (!event.target.closest(".nav-container")) {
-       setIsNavOpen(false);
-     }
-   };
+ const toggleDrawer = (newOpen) => () => {
+   setOpen(newOpen);
+ };
 
-   window.addEventListener("click", handleClickOutside);
-   return () => {
-     window.removeEventListener("click", handleClickOutside);
-   };
- }, []);
+ 
 
   const navItems = [
     {
@@ -58,6 +61,49 @@ function Header() {
       active: authStatus,
     },
   ];
+
+
+  const DrawerList = (
+    <Box
+      sx={{ width: 200 }}
+      role="presentation"
+      onClick={() => toggleDrawer(false)}
+      className="bg-slate-500 h-full text-white font-bold"
+    >
+      <List>
+        {navItems
+          .filter((item) => item.active) // Filter only active items
+          .map((item) => (
+            <NavLink
+              to={item.slug}
+              key={item.name}
+              className={({ isActive }) =>
+                `${
+                  isActive
+                    ? "p-3 border-cyan-400 border-b-4 rounded-lg text-cyan-400"
+                    : "text-white-700"
+                } px-0 py-2 tracking-wider transition rounded-lg duration-200 ease-in-out font-semibold hover:border-cyan-400 hover:border-b-4 hover:text-cyan-400`
+              }
+            >
+              <ListItem key={item.name} disablePadding>
+                <ListItemButton>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
+          ))}
+      </List>
+      <Divider />
+      <List>
+        <ListItem className="flex justify-start items-start ">
+          
+            {authStatus && <LogoutBtn className="text-lg px-2" />}
+         
+        </ListItem>
+      </List>
+    </Box>
+  );
+
   return (
     <header className="py-3 border-b-2 border-b-cyan-400 bg-gradient-to-r from-gray-500 to-gray-400 text-white h-20 md:h-24">
       <Container>
@@ -75,57 +121,14 @@ function Header() {
                 </h1>
               </Link>
             </div>
-            <button onClick={toggleNav}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
-            {isNavOpen && (
-              <ul
-                className={`transition-transform ease-in-out transform ${
-                  isNavOpen
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-full opacity-0"
-                } flex flex-col text-lg items-center justify-center gap-3 absolute top-full right-0 bg-gray-500 p-2 rounded-md shadow-md z-10`}
-                onClick={toggleNav}
-              >
-                {navItems.map((item) =>
-
-                  item.active ? (
-                    <li key={item.name}>
-                      <NavLink
-                        to={item.slug}
-                        className={({ isActive }) =>
-                          ` ${
-                            isActive
-                              ? "p-3 border-cyan-400 border-b-4 rounded-lg text-cyan-400"
-                              : "text-white-700"
-                          } px-0 py-2 tracking-wider transition rounded-lg duration-200 ease-in-out font-semibold hover:border-cyan-400 hover:border-b-4 hover:text-cyan-400`
-                        }
-                      >
-                        {item.name}
-                      </NavLink>
-                    </li>
-                  ) : null
-                )}
-                {authStatus && (
-                  <li>
-                    <LogoutBtn />
-                  </li>
-                )}
-              </ul>
-            )}
+            <div className="md:hidden">
+              <Button onClick={toggleDrawer(true)}>
+                <MenuIcon className="text-white font-semibold text-lg"/>
+              </Button>
+              <Drawer open={open} anchor="right" onClose={toggleDrawer(false)}>
+                {DrawerList}
+              </Drawer>
+            </div>
           </div>
 
           {/* DESKTOP DISPLAY : */}
