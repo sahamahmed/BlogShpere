@@ -1,9 +1,10 @@
-
+import conf from "../conf/conf.js";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
 
 // eslint-disable-next-line react/prop-types
 export default function RTE({ name, control, label, defaultValue = "" }) {
+  // console.log(conf.tinymceId);
   return (
     <div className="w-full">
       {label && (
@@ -18,7 +19,7 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
         render={({ field: { onChange } }) => (
           <Editor
             initialValue={defaultValue}
-            apiKey="lefjecjw9g4gem712ur5a6la7m6tqisyhwrxsll18g7f2shj"
+            apiKey={conf.tinymceId}
             init={{
               plugins:
                 "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss",
