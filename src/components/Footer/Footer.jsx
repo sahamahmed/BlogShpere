@@ -3,7 +3,7 @@ import Logo from "../Logo";
 
 function Footer() {
   return (
-    <section className="relative overflow-hidden py-10 bg-gray-800 text-white">
+    <section className="relative overflow-hidden py-10 bg-gray-800 text-white 2xl:h-full">
       <div className="relative z-10 mx-auto max-w-7xl px-4 ">
         <div className="-m-6 md:grid md:grid-cols-5 grid grid-cols-2 md:text-nowrap ">
           {/* logo and title */}

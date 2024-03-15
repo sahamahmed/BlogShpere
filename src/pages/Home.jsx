@@ -10,7 +10,7 @@ import Notification from "../components/notification/Notification";
 import PostCard from "../components/postCard/PostCard"
 import {Input } from "../components";
 import { FcSearch } from "react-icons/fc";
-
+import { TypeEffect } from "../components/TypeEffect";
 
 function Home() {
   const authStatus = useSelector((state) => state.auth.status);
@@ -18,16 +18,15 @@ function Home() {
   const userName = userDetails?.name.split(" ")[0]
   const postData = useSelector((state) => state.post.postData);
 
+
+
   const dispatch = useDispatch();
 
   const [showNotification, setShowNotification] = useState(false);
   const { register, handleSubmit } = useForm();
   const [posts, setposts] = useState([]);
   const [searched, setSearched] = useState(false);
-//////////////////////////////////////////////////////////////////////////////////////////
 
- 
-///////////////////////////////////////////////////////////////////////////////////
   const fetchSearch = (data) => {
     const searchTerm = data.searchpost.toLowerCase();
     const filteredPosts = postData.filter((post) =>
@@ -71,15 +70,21 @@ function Home() {
     );
   } else if (authStatus === false) {
     return (
-      <div className="my-24  space-y-4">
+      <div className="my-24  space-y-4 ">
         <Loadingbar />
-        <h1 className=" md:text-3xl font-bold text-white text-center text-2xl ">
-          Welcome to <span className="text-teal-500 hover:text-teal-600 hover:cursor-pointer"> BlogSphere</span>
+        <h1 className=" md:text-3xl font-bold text-white text-center text-2xl xl:text-5xl lg:text-4xl ">
+          Welcome to{" "}
+          <span className="text-teal-500 hover:text-teal-600 hover:cursor-pointer">
+            {" "}
+            BlogSphere
+          </span>
         </h1>
-        <h1 className="md:text-2xl text-xl text-white text-center font-bold">
+        <TypeEffect />
+
+        <h1 className="md:text-2xl text-xl text-white text-center font-bold xl:text-5xl lg:text-4xl">
           <Link
             to="/login"
-            className=" md:text-3xl text-2xl hover:border-b-2 border-b-white transition ease-in-out"
+            className=" md:text-3xl text-2xl hover:border-b-2 border-b-white transition ease-in-out xl:text-5xl lg:text-4xl"
           >
             Login
           </Link>{" "}
@@ -91,6 +96,8 @@ function Home() {
     return (
       <div className="w-full py-8">
         <Loadingbar />
+        <TypeEffect />
+
         <Container>
           <form
             onSubmit={handleSubmit(fetchSearch)}
@@ -117,6 +124,8 @@ function Home() {
     return (
       <div className="w-full py-8">
         <Loadingbar />
+        <TypeEffect />
+
         <Container>
           <form
             onSubmit={handleSubmit(fetchSearch)}
@@ -149,12 +158,12 @@ function Home() {
   }
 
   return (
-
     <>
-{/*       */}
-  
- {/* /////////////////////////// */}
-      {showNotification && <Notification message= {`Welcome back, ${userName}`} />}
+      {showNotification && (
+        <Notification message={`Welcome back, ${userName}`} />
+      )}
+      
+      <TypeEffect />
       <div className="w-full py-8">
         <Loadingbar />
         <Container>
@@ -175,7 +184,10 @@ function Home() {
         <Container>
           <div className="md:flex md:flex-wrap md:gap-x-5 md:gap-y-5 gap-y-3 md:justify-center grid grid-cols-1">
             {postData.map((post) => (
-              <div key={post.$id} className="p-2 md:w-1/3 md:mx-0 w-4/5 sm:w-1/2 mx-auto">
+              <div
+                key={post.$id}
+                className="p-2 md:w-1/3 md:mx-0 w-4/5 sm:w-1/2 mx-auto"
+              >
                 <PostCard {...post} />
               </div>
             ))}

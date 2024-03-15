@@ -107,7 +107,8 @@ function Header() {
   return (
     <header className="py-3 border-b-2 border-b-cyan-400 bg-gradient-to-r from-gray-500 to-gray-400 text-white h-20 md:h-24">
       <Container>
-        <nav className="lg:flex justify-center items-center">
+        <nav className="lg:flex justify-between items-center">
+
           {/* MOBILE DISPLAY */}
           <div className="nav-container flex flex-row justify-between items-center lg:hidden relative">
             <div className="mr-6">
@@ -121,7 +122,7 @@ function Header() {
                 </h1>
               </Link>
             </div>
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <Button onClick={toggleDrawer(true)}>
                 <MenuIcon className="text-white font-semibold text-lg"/>
               </Button>
